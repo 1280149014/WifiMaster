@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="split_line_margin" parent="split_line">
+        <item name="android:layout_marginStart">@dimen/item_setting_main_ps</item>
+        <item name="android:layout_marginEnd">@dimen/item_setting_main_ps</item>
+    </style>
+</resources>

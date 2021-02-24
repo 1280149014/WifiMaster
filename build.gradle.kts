@@ -1,6 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 buildscript {
+    val kotlin_version by extra("1.3.72")
     repositories {
         jcenter()
         google()
@@ -9,6 +10,7 @@ buildscript {
 
         classpath(GradlePluginId.ANDROID_GRADLE_PLUGIN)
         classpath(GradlePluginId.KOTLIN_GRADLE_PLUGIN)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 

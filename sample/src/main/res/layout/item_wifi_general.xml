@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:Lottie="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/norm_item_h"
+    android:layout_marginStart="@dimen/connect_margin_normal"
+    android:layout_marginEnd="@dimen/connect_margin_normal">
+
+    <TextView
+        android:id="@+id/tv_wifi_name"
+        style="@style/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/norm_margin25"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/dp_400"
+        android:singleLine="true"
+        android:layout_marginRight="@dimen/norm_margin25" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/pb_icon"
+        android:layout_width="@dimen/icon_wifi_size"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_toStartOf="@+id/img_wifi_lock"
+        android:visibility="invisible"
+        Lottie:lottie_autoPlay="true"
+
+        Lottie:lottie_fileName="loading.json"
+        Lottie:lottie_loop="true"
+        android:layout_toLeftOf="@+id/img_wifi_lock"
+        android:layout_marginRight="@dimen/margin_10" />
+
+    <ImageView
+        android:id="@+id/img_wifi_lock"
+        android:layout_width="@dimen/icon_wifi_size"
+        android:layout_height="@dimen/icon_wifi_size"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_toStartOf="@+id/img_signal"
+        android:src="@drawable/ic_general_lock_48px"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toLeftOf="@+id/img_signal" />
+
+    <ImageView
+        android:id="@+id/img_signal"
+        android:layout_width="@dimen/icon_wifi_size"
+        android:layout_height="@dimen/icon_wifi_size"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/img_info"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toLeftOf="@+id/img_info" />
+
+    <ImageView
+        android:id="@+id/img_info"
+        android:layout_width="@dimen/icon_wifi_size"
+        android:layout_height="@dimen/icon_wifi_size"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_general_info_48px"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

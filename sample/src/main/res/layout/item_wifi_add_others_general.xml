@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/norm_item_h"
+    android:layout_marginStart="@dimen/connect_margin_normal"
+    android:layout_marginEnd="@dimen/connect_margin_normal">
+
+    <TextView
+        style="@style/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:text="@string/str_other_network"
+        android:layout_marginRight="@dimen/margin_normal" />
+
+    <Button
+        android:id="@+id/bt_add_others"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/public_corners_bt"
+        android:minWidth="@dimen/item_button_w"
+        android:minHeight="@dimen/item_button_h"
+        android:text="@string/str_add"
+        android:textAllCaps="false"
+        android:textColor="@color/white_color"
+        style="@style/item_name"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_item_normal"
+    android:layout_marginStart="@dimen/margin_normal"
+    android:layout_marginEnd="@dimen/margin_normal">
+
+    <View
+        style="@style/split_line"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:id="@+id/tv_wifi_connected_name"
+        style="@style/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/night_color_01"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal" />
+
+
+    <TextView
+        android:id="@+id/item_value"
+        style="@style/item_value"
+        android:layout_width="wrap_content"
+        android:textColor="@color/night_color_01"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_toStartOf="@+id/img_connected_wifi_lock"
+        android:text="@string/value_wifi_connected"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toLeftOf="@+id/img_connected_wifi_lock" />
+
+    <ImageView
+        android:id="@+id/img_connected_wifi_lock"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_toStartOf="@+id/img_wifi_connected"
+        app:srcCompat="@drawable/ic_general_lock_48px"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toLeftOf="@+id/img_wifi_connected" />
+
+    <ImageView
+        android:id="@+id/img_wifi_connected"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/info"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toLeftOf="@+id/info" />
+
+    <ImageView
+        android:id="@+id/info"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_general_info_48px"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

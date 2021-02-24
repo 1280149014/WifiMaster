@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_0">16sp</dimen>
+
+
+    <!--通用-->
+    <!--0516规范统一字号 start-->
+    <!--item 宽 、高-->
+    <dimen name="norm_item_h">40dp</dimen>
+    <dimen name="height_item_normal_commitem">80dp</dimen>
+    <dimen name="height_item_indicator">72dp</dimen>
+    <dimen name="norm_item_h2">106dp</dimen>
+    <dimen name="norm_item_h208">138dp</dimen>
+    <dimen name="basic_width">600dp</dimen>
+    <dimen name="icon_wifi_size">30dp</dimen>
+
+
+    <!--通用-->
+
+    <dimen name="size_primary_font">17sp</dimen>
+    <dimen name="margin_normal">21dp</dimen>
+    <dimen name="margin_normal1">23dp</dimen>
+    <dimen name="connect_margin_normal">20dp</dimen>
+
+
+
+
+
+    <!--arrow-->
+    <dimen name="size_item_font_name">17sp</dimen>
+    <dimen name="size_item_font_value">17sp</dimen>
+    <dimen name="height_item_normal">66dp</dimen>
+    <dimen name="norm_margin25">25dp</dimen>
+    <dimen name="dp_400">400dp</dimen>
+    <dimen name="font_size36">36sp</dimen>
+
+
+    <!--margin-->
+    <dimen name="norm_margin19">12dp</dimen>
+    <dimen name="norm_margin30">20dp</dimen>
+    <dimen name="norm_margin35">23dp</dimen>
+    <dimen name="norm_margin38">25dp</dimen>
+
+    <dimen name="norm_margin50">33.3dp</dimen>
+    <dimen name="norm_margin76">51dp</dimen>
+    <dimen name="norm_margin62">41dp</dimen>
+    <dimen name="norm_margin110">73.3dp</dimen>
+    <dimen name="norm_margin122">81.3dp</dimen>
+    <dimen name="item_setting_main_pe">28dp</dimen>
+    <dimen name="item_setting_main_ps">33dp</dimen>
+    <dimen name="setting_title_dp">6dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_140">140dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+
+    <!--button-->
+    <dimen name="item_button_w">60dp</dimen>
+    <dimen name="item_button_h">48dp</dimen>
+    <dimen name="button_text_size">24sp</dimen>
+    <dimen name="button_radius">4dp</dimen>
+    <dimen name="radio_space">18dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="font_24">24sp</dimen>
+
+    <dimen name="search_image_w">53dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="font_36">36sp</dimen>
+
+
+
+
+</resources>

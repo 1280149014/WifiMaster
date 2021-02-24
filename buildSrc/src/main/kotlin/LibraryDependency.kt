@@ -19,11 +19,12 @@ private object LibraryVersion {
     const val coilVersion = "0.11.0"
     const val progressButtonVersion = "2.1.0"
     const val flowBindingsVersion = "0.12.0"
-
+    const val lottieVersion = "2.5.0"
 }
 
 // Versions consts that are used across libraries and Gradle plugins
 object CoreVersion {
+
     const val KOTLIN = "1.4.0"
     const val KTLINT = "0.36.0"
     const val NAVIGATION = "2.3.0"
@@ -61,7 +62,7 @@ object AppDependency {
     const val progressButton = "com.github.razir.progressbutton:progressbutton:${LibraryVersion.progressButtonVersion}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${CoreVersion.KOTLIN}"
     const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${CoreVersion.KOTLIN}"
-
+    const val lottie = "com.airbnb.android:lottie:${LibraryVersion.lottieVersion}"
 
     fun getAll() = AppDependency::class.memberProperties
         .filter { it.isConst }

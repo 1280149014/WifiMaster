@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <!--文字相关-->
+    <style name="normal_font">
+        <item name="android:textColor">@color/night_color_01</item>
+    </style>
+
+    <style name="item_name" parent="normal_font">
+        <item name="android:textSize">@dimen/size_item_font_name</item>
+    </style>
+
+    <style name="item_value" parent="normal_font">
+        <item name="android:textSize">@dimen/size_item_font_value</item>
+    </style>
+
+    <!--通用-->
+    <!--分割线-->
+
+    <style name="split_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/night_color_03</item>
+    </style>
+
+    <style name="split_line_margin" parent="split_line">
+        <item name="android:layout_marginLeft">@dimen/item_setting_main_ps</item>
+        <item name="android:layout_marginRight">@dimen/item_setting_main_ps</item>
+    </style>
+
 </resources>

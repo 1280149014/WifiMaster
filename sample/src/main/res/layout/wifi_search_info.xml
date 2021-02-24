@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/wifi_info_name"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/search_image_w"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_30"
+        android:gravity="left|center_vertical"
+        android:textSize="@dimen/font_24" />
+
+    <ImageView
+        android:id="@+id/wifi_info_secret"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@mipmap/wifi_encryption_lock" />
+
+    <ImageView
+        android:id="@+id/wifi_info_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_30"
+        android:background="@mipmap/wifi_signal_strength" />
+</LinearLayout>

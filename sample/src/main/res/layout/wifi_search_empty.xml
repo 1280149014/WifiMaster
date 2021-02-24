@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wifi_detail_search_empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dp_200"
+    android:gravity="center"
+    android:text="@string/no_networks_available"
+    android:textColor="@color/color_33FFFFFF"
+    android:textSize="24sp"
+    android:visibility="gone" />
+

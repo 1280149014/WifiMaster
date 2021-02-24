@@ -3,4 +3,63 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <!--通用-->
+    <!--0.03-->
+    <!--0.1-->
+    <color name="color_gray19">#19FFFFFF</color>
+    <!--0.2-->
+    <!--0.3-->
+    <color name="color_gray4d">#4DFFFFFF</color>
+    <color name="color_white">#FFFFFFFF</color>
+    <color name="color_white80">#CCFFFFFF</color>
+    <color name="lamp_bg_on">#2EFFFFFF</color>
+    <color name="lamp_bg_on_1">#33FFFFFF</color>
+    <color name="lamp_bg_off">#61000000</color>
+
+    <!--100% 白 黑-->
+<!--    <color name="night_color_01">#FFFFFFFF</color>-->
+<!--    <color name="night_color_02">#80FFFFFF</color>-->
+<!--    <color name="night_color_03">#0DDDDDDD</color>-->
+<!--    <color name="night_color_04">#FFFFFF</color>-->
+<!--    <color name="night_color_05">#88FFFFFF</color>-->
+<!--    <color name="night_color_06">#FFDDDDDD</color>-->
+<!--    <color name="night_color_08">#14FFFFFF</color>-->
+<!--    <color name="night_color_09">#CCDDDDDD</color>-->
+
+    <color name="white_color">#FFFFFF</color>
+
+    <!--白天-->
+    <color name="night_color_01">#000000</color>
+    <color name="night_color_02">#80000000</color>
+    <color name="night_color_03">#1A000000</color>
+    <color name="night_color_04">#000000</color>
+    <color name="night_color_05">#7F000000</color>
+    <color name="night_color_06">#000000</color>
+    <color name="night_color_08">#FFFFFF</color>
+    <color name="night_color_09">#7F000000</color>
+
+    <color name="item_button_color">#000000</color>
+    <color name="item_button_stroke_color">#000000</color>
+
+    <color name="color_FF9C0000">#FF9C0000</color>
+    <color name="color_FFD50000">#FFD50000</color>
+    <color name="color_FFFB0B0B">#FFFB0B0B</color>
+    <color name="color_FFFF6300">#FFFF6300</color>
+    <color name="color_FF1A1726">#FF1A1726</color>
+    <color name="color_33FFFFFF">#33FFFFFF</color>
+    <color name="color_louder">#9501FE</color>
+    <color name="color_inter">#FF5411</color>
+    <color name="color_hyper">#FB0B0B</color>
+    <color name="color_clear">#DADAFB</color>
+    <color name="color_eco">#64FE79</color>
+    <color name="color_comfort">#FEFEFE</color>
+    <color name="color_dynamic">#FE0000</color>
+    <color name="color_xc">#FE8500</color>
+    <color name="color_pure">#00D5FE</color>
+    <color name="color_hybrid">#FEFEFE</color>
+    <color name="color_power">#FE0000</color>
+
+
 </resources>
