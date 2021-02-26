@@ -4,6 +4,7 @@
     xmlns:Lottie="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/norm_item_h"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/connect_margin_normal"
     android:layout_marginEnd="@dimen/connect_margin_normal">
 
@@ -15,9 +16,36 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/norm_margin25"
         android:ellipsize="end"
-        android:maxWidth="@dimen/dp_400"
+        android:maxWidth="@dimen/wifi_name_max_width"
         android:singleLine="true"
+        android:layout_marginRight="@dimen/norm_margin25"
+        tools:text="热点"/>
+
+    <TextView
+        android:id="@+id/tv_wifi_connected_state"
+        style="@style/item_small_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/norm_margin25"
+        android:layout_below="@id/tv_wifi_name"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/wifi_name_max_width"
+        android:singleLine="true"
+        tools:text="已连接"
         android:layout_marginRight="@dimen/norm_margin25" />
+
+    <TextView
+        android:id="@+id/tv_wifi_security"
+        style="@style/item_small_text"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tv_wifi_name"
+        android:layout_marginLeft="@dimen/norm_margin25"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/wifi_name_max_width"
+
+        />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/pb_icon"

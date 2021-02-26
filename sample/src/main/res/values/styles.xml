@@ -18,6 +18,11 @@
         <item name="android:textSize">@dimen/size_item_font_name</item>
     </style>
 
+    <style name="item_small_text" parent="normal_font">
+        <item name="android:textSize">@dimen/size_item_small_font_text</item>
+        <item name="android:color">@color/night_color_01</item>
+    </style>
+
     <style name="item_value" parent="normal_font">
         <item name="android:textSize">@dimen/size_item_font_value</item>
     </style>

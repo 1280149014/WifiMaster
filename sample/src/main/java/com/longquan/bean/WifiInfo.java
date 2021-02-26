@@ -153,6 +153,10 @@ public class WifiInfo implements Serializable ,Comparable<WifiInfo>{
         return security;
     }
 
+    public int getAuthentication() {
+        return security;
+    }
+
     public void setSecurity(String value) {
         this.security = WifiInfo.Security.NONE;
         if (value.contains("EAP")) {
@@ -162,8 +166,11 @@ public class WifiInfo implements Serializable ,Comparable<WifiInfo>{
         } else if (value.contains("WEP")) {
             this.security = WifiInfo.Security.WEP;
         }
-
     }
+
+
+
+
 
     public void setSecurity(int security) {
         this.security = security;

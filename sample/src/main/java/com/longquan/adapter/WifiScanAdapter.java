@@ -51,7 +51,6 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.mOnClickListener = onClickListener;
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -85,6 +84,18 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
             apViewHolder.wifiName.setText(selected.getSsid());
+            apViewHolder.wifiSecurity.setText(selected.getCapabilities());
+            apViewHolder.wifiConnectState.setVisibility(View.VISIBLE);
+            if(!getConnectStateText(selected).isEmpty()){
+                apViewHolder.wifiConnectState.setVisibility(View.VISIBLE);
+                apViewHolder.wifiConnectState.setText(getConnectStateText(selected));
+            } else if(selected.getCapabilities().equals("[ESS][WFA-HT]")
+                    || selected.getCapabilities().equals("[ESS][WFA-HT][WFA-VHT]")){
+                apViewHolder.wifiConnectState.setVisibility(View.VISIBLE);
+                apViewHolder.wifiConnectState.setText(R.string.networks_may_need_authentication);
+            } else {
+                apViewHolder.wifiConnectState.setVisibility(View.GONE);
+            }
             apViewHolder.pb.setVisibility(selected.isConnecting ? View.VISIBLE : View.GONE);
             apViewHolder.wifiLock.setVisibility(selected.getSecurity() != WifiInfo.Security.NONE ? View.VISIBLE : View.INVISIBLE);
             apViewHolder.wifiSignal.setImageResource(selected.getWifiLevelImageWithoutCryp());
@@ -110,6 +121,13 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    private String getConnectStateText(WifiInfo selected) {
+        if(selected.isConnect()){
+            return mContext.getResources().getString(R.string.value_wifi_connected);
+        }
+        return "";
+    }
+
     @Override
     public int getItemCount() {
         return mData.size() + 1;
@@ -126,19 +144,22 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public static class APViewHolder extends RecyclerView.ViewHolder {
         TextView wifiName;
+        TextView wifiSecurity;
+        TextView wifiConnectState;
         LottieAnimationView pb;
         ImageView wifiLock;
         ImageView wifiSignal;
         ImageView wifiInfo;
 
-
         public APViewHolder(@NonNull View itemView) {
             super(itemView);
             wifiName = itemView.findViewById(R.id.tv_wifi_name);
+            wifiSecurity = itemView.findViewById(R.id.tv_wifi_security);
             pb = itemView.findViewById(R.id.pb_icon);
             wifiLock = itemView.findViewById(R.id.img_wifi_lock);
             wifiSignal = itemView.findViewById(R.id.img_signal);
             wifiInfo = itemView.findViewById(R.id.img_info);
+            wifiConnectState = itemView.findViewById(R.id.tv_wifi_connected_state);
         }
     }
 
@@ -163,6 +184,7 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mData.addAll(newData);
         }
         Collections.sort(mData);
+        mData.add(0,curConnected);
         notifyDataSetChanged();
     }
 

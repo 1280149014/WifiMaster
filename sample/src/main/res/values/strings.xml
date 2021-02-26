@@ -32,12 +32,15 @@
     <string name="title_wifi_edit">输入密码</string>
     <string name="title_security_Level">安全等级</string>
     <string name="no_networks_available">无可用网络</string>
-
+    <string name="networks_may_need_authentication">可能需要网页认证</string>
     <string name="personal_ap">热点</string>
     <string name="wifi_search_tip_msg">搜寻可用网络</string>
     <string name="wifi_dialog_show_password">显示密码</string>
     <string name="wifi_connect">连接</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="wifi_band_24ghz" msgid="852929254171856911">"2.4 GHz"</string>
+    <string name="wifi_band_5ghz" msgid="6433822023268515117">"5 GHz"</string>
 
 </resources>

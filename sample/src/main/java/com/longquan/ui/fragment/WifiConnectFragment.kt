@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.longquan.adapter.BaseAdapter
 import com.longquan.adapter.WifiScanAdapter
+import com.longquan.adapter.WifiScanAdapter.onClickListener
 import com.longquan.bean.SsidBean
 import com.longquan.bean.WifiInfo
 import com.longquan.ui.HomeActivity
@@ -21,7 +22,7 @@ import com.thanosfisherman.wifiutils.sample.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_wifi_connect.*
 
-class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver {
+class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClickListener {
 
     private var TAG = WifiConnectFragment::class.java.simpleName ;
     private var mWifiTracker: WifiTracker? = null
@@ -35,6 +36,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver {
         mWifiManager = activity?.application?.getSystemService(Context.WIFI_SERVICE) as WifiManager?
         mWifiTracker = WifiTracker(activity,mWifiManager)
         mWifiTracker!!.setWifiListener(this)
+        adapter?.setOnClickListener(this)
         activity?.registerReceiver(mWifiTracker!!.receiver, mWifiTracker!!.newIntentFilter())
     }
 
@@ -82,8 +84,6 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver {
                     }
                 }
     }
-
-
 
     override fun onSupplicantScanning() {
         LogUtils.d(TAG, "onSupplicantScanning")
@@ -153,5 +153,17 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver {
 
     override fun onSupplicantCompleted() {
         LogUtils.d(TAG, "onSupplicantCompleted")
+    }
+
+    override fun onItemInfoClickListener(position: Int, selected: WifiInfo?) {
+        LogUtils.d(TAG, "onSupplicantCompleted")
+    }
+
+    override fun onAddOthersNetwork() {
+        LogUtils.d(TAG, "onAddOthersNetwork")
+    }
+
+    override fun onItemClickListener(position: Int, selected: WifiInfo?) {
+        LogUtils.d(TAG, "onAddOthersNetwork")
     }
 }

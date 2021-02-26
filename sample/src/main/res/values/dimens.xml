@@ -13,6 +13,7 @@
     <dimen name="norm_item_h208">138dp</dimen>
     <dimen name="basic_width">600dp</dimen>
     <dimen name="icon_wifi_size">30dp</dimen>
+    <dimen name="wifi_name_max_width">200dp</dimen>
 
 
     <!--通用-->
@@ -20,14 +21,11 @@
     <dimen name="size_primary_font">17sp</dimen>
     <dimen name="margin_normal">21dp</dimen>
     <dimen name="margin_normal1">23dp</dimen>
-    <dimen name="connect_margin_normal">20dp</dimen>
-
-
-
-
+    <dimen name="connect_margin_normal">10dp</dimen>
 
     <!--arrow-->
-    <dimen name="size_item_font_name">17sp</dimen>
+    <dimen name="size_item_small_font_text">8sp</dimen>
+    <dimen name="size_item_font_name">14sp</dimen>
     <dimen name="size_item_font_value">17sp</dimen>
     <dimen name="height_item_normal">66dp</dimen>
     <dimen name="norm_margin25">25dp</dimen>

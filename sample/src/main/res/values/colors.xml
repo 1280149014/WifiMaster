@@ -53,13 +53,7 @@
     <color name="color_inter">#FF5411</color>
     <color name="color_hyper">#FB0B0B</color>
     <color name="color_clear">#DADAFB</color>
-    <color name="color_eco">#64FE79</color>
-    <color name="color_comfort">#FEFEFE</color>
-    <color name="color_dynamic">#FE0000</color>
-    <color name="color_xc">#FE8500</color>
-    <color name="color_pure">#00D5FE</color>
-    <color name="color_hybrid">#FEFEFE</color>
-    <color name="color_power">#FE0000</color>
+
 
 
 </resources>
