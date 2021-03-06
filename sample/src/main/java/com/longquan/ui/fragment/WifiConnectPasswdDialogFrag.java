@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
@@ -18,19 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.longquan.R;
 import com.longquan.ui.view.EditInputView;
 import com.longquan.utils.SizeUtils;
-import com.thanosfisherman.wifiutils.sample.R;
-
 
 /**
  * author : charile yuan
  * date   : 21-3-4
  * desc   :
  */
-
-
-
 public class WifiConnectPasswdDialogFrag extends DialogFragment {
 
     private Context mContext;

@@ -1,16 +1,6 @@
 package com.longquan.utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
-
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * author : charile yuan

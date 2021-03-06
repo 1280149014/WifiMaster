@@ -6,8 +6,9 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.longquan.R
 import com.longquan.bean.SsidBean
-import com.thanosfisherman.wifiutils.sample.R
+
 import kotlinx.android.synthetic.main.recycleview_item.view.*
 
 /**

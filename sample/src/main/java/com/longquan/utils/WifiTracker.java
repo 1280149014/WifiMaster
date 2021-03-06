@@ -75,7 +75,6 @@ public class WifiTracker {
         this.mWifiListener = listener;
     }
 
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -2,7 +2,8 @@ package com.longquan.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.thanosfisherman.wifiutils.sample.R
+import com.longquan.R
+
 
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

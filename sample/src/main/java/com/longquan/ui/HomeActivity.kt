@@ -4,11 +4,14 @@ import android.Manifest
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.longquan.R
 import com.longquan.bean.WifiInfo
+import com.longquan.common.event.EditPwdTextEvent
 import com.longquan.common.statusbar.StatusBarUtil
 import com.longquan.ui.fragment.OpenGpsFragment
 import com.longquan.ui.fragment.OpenWifiFragment
@@ -17,7 +20,8 @@ import com.longquan.utils.GPSUtil
 import com.longquan.utils.LogUtils
 import com.longquan.utils.WifiHelper
 import com.longquan.utils.WifiTracker
-import com.thanosfisherman.wifiutils.sample.R
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * author : charile yuan
@@ -46,6 +50,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
         mWifiTracker = WifiTracker(this,mWifiManager)
         mWifiTracker!!.setWifiListener(this)
         registerWifiChangeReceiver()
+        EventBus.getDefault().register(this);
     }
 
     private fun updateUi() {
@@ -109,7 +114,11 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
             unregisterReceiver(mWifiTracker!!.receiver)
             mWifiTracker!!.stopScan()
         }
+        EventBus.getDefault().unregister(this);
     }
+
+
+
 
     private fun registerWifiChangeReceiver() {
         registerReceiver(mWifiTracker!!.receiver, mWifiTracker!!.newIntentFilter())
@@ -145,60 +154,14 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
 
     override fun onWifiStateChanged(state: Int) {
         LogUtils.d("", "onWifiStateChanged state:$state")
-//        when (state) {
-//            WifiManager.WIFI_STATE_ENABLING -> {
-//                showWifiList()
-//                mSwitchButton.setEnabled(false)
-//                mLoadingView.setVisibility(View.VISIBLE)
-//                mRecyclerView.setVisibility(View.GONE)
-//            }
-//            WifiManager.WIFI_STATE_ENABLED -> {
-//                mSwitchButton.setEnabled(true)
-//                mSwitchButton.setChecked(true)
-//                if (isNeedToScan) {
-//                    mWifiTracker!!.startScan()
-//                    showWifiList()
-//                }
-//            }
-//            WifiManager.WIFI_STATE_DISABLING -> {
-//                hideWifiList()
-//                mSwitchButton.setEnabled(false)
-//                mLoadingView.setVisibility(View.GONE)
-//                mRecyclerView.setVisibility(View.GONE)
-//                LogUtils.d(TAG, "onWifiStateChanged WIFI_STATE_DISABLING --> clearCurrentJoinAP")
-//                WirelessUtils.clearCurrentJoinAP()
-//                mLocalHandler.removeMessages(com.ecarx.settings.wifiap.wifip.WifiSettingsFragment.LocalHandler.JOIN_HIDE_TIME_OUT)
-//            }
-//            WifiManager.WIFI_STATE_DISABLED -> {
-//                mSwitchButton.setEnabled(true)
-//                mSwitchButton.setChecked(false)
-//                mWifiTracker!!.pauseScan()
-//                hideWifiList()
-//            }
-//            WifiManager.WIFI_STATE_UNKNOWN -> mSwitchButton.setEnabled(true)
-//            else -> {
-//            }
-//        }
     }
 
     override fun onConnectFail() {
         LogUtils.d(TAG, "onConnectFail")
-//        mScanAdapter.refreshConnectFail()
     }
 
     override fun onScanResultsAvailable(avaiableWifiInfos: MutableList<WifiInfo>?) {
-//        mLoadingView.setVisibility(View.GONE)
-//        if (availableWifiInfo != null && mScanAdapter != null) {
-//            val size: Int = availableWifiInfo.size
-//            if (size != 0) {
-//                mRecyclerView.setVisibility(View.VISIBLE)
-//                mScanList = availableWifiInfo
-//                mScanAdapter.updateData(mScanList)
-//                mRecyclerView.scrollToPosition(0)
-//            } else {
-//                LogUtils.d(TAG, "onScanResultsAvailable availableWifiInfo size$size")
-//            }
-//        }
+        // Do nothing
     }
 
     override fun onSupplicantCompleted() {

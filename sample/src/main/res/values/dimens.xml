@@ -67,9 +67,8 @@
     <dimen name="search_image_w">53dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="font_36">36sp</dimen>
-    <dimen name="edit_input_w_">667dp</dimen>
-    <dimen name="edit_input_h_">229dp</dimen>
-    <dimen name="dp_940">620dp</dimen>
+
+
     <dimen name="dp_68">45dp</dimen>
     <dimen name="dp_10">6dp</dimen>
     <dimen name="dp_24">16dp</dimen>
@@ -80,5 +79,13 @@
     <dimen name="dp_258">166dp</dimen>
     <dimen name="dp_50">33dp</dimen>
 
+    <!-- 密码输入框参数 -->
+    <dimen name="edit_input_w_">210dp</dimen>
+    <dimen name="edit_input_h_">170dp</dimen>
+    <dimen name="norm_margin">20dp</dimen>
+
+    <!-- checkBox 大小-->
+    <dimen name="checkbox_size_w">20dp</dimen>
+    <dimen name="checkbox_size_h">20dp</dimen>
 
 </resources>

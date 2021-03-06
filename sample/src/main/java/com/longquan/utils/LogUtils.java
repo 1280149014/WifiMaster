@@ -2,7 +2,7 @@ package com.longquan.utils;
 
 import android.util.Log;
 
-import com.MyApplication;
+import com.longquan.MyApplication;
 
 /**
  * author : charile yuan

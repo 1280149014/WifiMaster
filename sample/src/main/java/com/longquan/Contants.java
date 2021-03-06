@@ -1,4 +1,4 @@
-package com;
+package com.longquan;
 
 /**
  * author : charile yuan

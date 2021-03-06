@@ -1,27 +1,28 @@
 package com.longquan.ui.fragment
 
 import android.content.Context
+import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.longquan.adapter.BaseAdapter
+import com.longquan.R
 import com.longquan.adapter.WifiScanAdapter
 import com.longquan.adapter.WifiScanAdapter.onClickListener
-import com.longquan.bean.SsidBean
 import com.longquan.bean.WifiInfo
-import com.longquan.ui.HomeActivity
-import com.longquan.utils.GPSUtil
+import com.longquan.common.event.EditPwdTextEvent
 import com.longquan.utils.LogUtils
 import com.longquan.utils.WifiHelper
+import com.longquan.utils.WifiSupport
 import com.longquan.utils.WifiTracker
-import com.thanosfisherman.wifiutils.sample.R
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_wifi_connect.*
+import org.greenrobot.eventbus.Subscribe
 
+@Suppress("DEPRECATED_IDENTITY_EQUALS")
 class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClickListener {
 
     private var TAG = WifiConnectFragment::class.java.simpleName ;
@@ -30,33 +31,21 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     private var mWifiManager: WifiManager? = null
 
     private var adapter:WifiScanAdapter? = null
+    private var mWifiHelper: WifiHelper? = null
+    private var mWifiSupport: WifiSupport? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mWifiManager = activity?.application?.getSystemService(Context.WIFI_SERVICE) as WifiManager?
         mWifiTracker = WifiTracker(activity,mWifiManager)
         mWifiTracker!!.setWifiListener(this)
-        adapter?.setOnClickListener(this)
+        mWifiHelper = WifiHelper(activity,mWifiManager)
+        mWifiSupport = activity?.let { mWifiManager?.let { it1 -> WifiSupport(it, it1) } }
         activity?.registerReceiver(mWifiTracker!!.receiver, mWifiTracker!!.newIntentFilter())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mWifiManager?.wifiState?.let { onWifiStateChanged(it) }
-    }
-
-    private fun generateDummyList(size: Int): ArrayList<SsidBean> {
-        val list = ArrayList<SsidBean>()
-        for (i in 0 until size) {
-            val item = SsidBean("wifi 热点$i")
-            list += item
-        }
-        return list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_wifi_connect, container, false)
     }
 
@@ -65,7 +54,14 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         adapter = WifiScanAdapter(activity)
         wifi_recycleView.adapter = adapter
         wifi_recycleView.layoutManager = LinearLayoutManager(activity)
+        adapter?.setOnClickListener(this)
         adapter!!.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWifiTracker!!.startScan()
+        mWifiManager?.wifiState?.let { onWifiStateChanged(it) }
     }
 
     override fun onDestroy() {
@@ -74,6 +70,22 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
             activity?.unregisterReceiver(mWifiTracker!!.receiver)
             mWifiTracker!!.stopScan()
         }
+    }
+
+    @Subscribe
+    fun onEventMainThread(event: EditPwdTextEvent) {
+        LogUtils.d(TAG, "EditPwdTextEvent text:" + event.mText)
+//        if (!TextUtils.isEmpty(event.mText)) {
+//            //用户输入密码,继续尝试
+//            currSelected.isConnecting = true
+//            val pwd: String = event.mText
+//            currSelected.setPassword(pwd)
+//            mWifiAPManager.connectWifi(currSelected, connectCallback)
+//        } else {
+//            //不再尝试登录
+//            currSelected.isConnecting = false
+//        }
+        adapter?.notifyDataSetChanged()
     }
 
     companion object {
@@ -162,8 +174,46 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     override fun onAddOthersNetwork() {
         LogUtils.d(TAG, "onAddOthersNetwork")
     }
-
+    private val isScroll = false
+    private var mCurrSelected: WifiInfo? = null
+    private var isNeedShowPasswordError = false
     override fun onItemClickListener(position: Int, selected: WifiInfo?) {
         LogUtils.d(TAG, "onAddOthersNetwork")
+        if (isScroll) {
+            return
+        }
+        mCurrSelected = selected
+        if (selected != null) {
+            toConnect(selected)
+        }
     }
+
+    /**
+     * 连接wifi
+     *
+     * @param info
+     */
+    private fun toConnect(info: WifiInfo) {
+        LogUtils.d(TAG, "toConnect=:$info")
+        if (info.security === WifiInfo.Security.NONE || !TextUtils.isEmpty(info.password)) {
+            LogUtils.d(TAG, "toConnect WifiInfo Security is NONE Or Password Has Saved:$info")
+            mWifiSupport!!.join(info)
+        } else {
+            LogUtils.d(TAG, "mWifiSupport:$mWifiSupport")
+            if(mWifiSupport == null || info == null){
+                return
+            }
+            val config: WifiConfiguration? = mWifiSupport!!.isExsits(info.ssid)
+            if (config?.preSharedKey != null) {
+                LogUtils.d(TAG, "toConnect WifiInfo Has configured:$info")
+                mWifiSupport?.join(config)
+            } else {
+                LogUtils.d(TAG, "toConnect WifiInfo Has not configured:$info")
+                val passwdDialogFrag = WifiConnectPasswdDialogFrag()
+                passwdDialogFrag.show(parentFragmentManager, "WifiConnectPasswdDialogFrag")
+            }
+            isNeedShowPasswordError = true
+        }
+    }
+
 }

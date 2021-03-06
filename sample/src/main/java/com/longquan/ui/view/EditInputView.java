@@ -24,7 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.thanosfisherman.wifiutils.sample.R;
+import com.longquan.R;
+
 
 /**
  * author : charile yuan

@@ -12,7 +12,8 @@ import android.view.WindowManager;
 
 import androidx.annotation.IntDef;
 
-import com.thanosfisherman.wifiutils.sample.R;
+import com.longquan.R;
+
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

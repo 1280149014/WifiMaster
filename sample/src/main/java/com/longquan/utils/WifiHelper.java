@@ -1,6 +1,5 @@
 package com.longquan.utils;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -9,18 +8,16 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.MyApplication;
+import com.longquan.MyApplication;
 import com.longquan.bean.WifiInfo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.Contants.OPEN_WIFI_INTENT;
+import static com.longquan.Contants.OPEN_WIFI_INTENT;
 
 /**
  * author : charile yuan

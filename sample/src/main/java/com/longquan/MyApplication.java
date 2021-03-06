@@ -1,4 +1,4 @@
-package com;
+package com.longquan;
 
 import android.app.Application;
 import android.content.Context;
@@ -15,8 +15,6 @@ public class MyApplication extends Application {
     private String TAG = "MyApplication";
     public static MyApplication sApp;
     public static String versionName;
-
-
 
     public static MyApplication getInstance() {
         return sApp;

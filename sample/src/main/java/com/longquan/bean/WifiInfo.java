@@ -5,7 +5,8 @@ import android.net.wifi.WifiManager;
 
 import androidx.annotation.NonNull;
 
-import com.thanosfisherman.wifiutils.sample.R;
+
+import com.longquan.R;
 
 import java.io.Serializable;
 

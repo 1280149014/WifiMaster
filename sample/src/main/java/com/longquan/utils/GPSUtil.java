@@ -1,10 +1,8 @@
 package com.longquan.utils;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.provider.Settings;
 
 /**

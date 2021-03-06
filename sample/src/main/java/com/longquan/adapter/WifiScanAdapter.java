@@ -1,4 +1,5 @@
-package com.longquan.adapter;
+ 
+ package com.longquan.adapter;
 
 /**
  * author : charile yuan
@@ -21,10 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.longquan.R;
 import com.longquan.bean.WifiInfo;
 import com.longquan.utils.LogUtils;
 import com.longquan.utils.WifiHelper;
-import com.thanosfisherman.wifiutils.sample.R;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,17 +72,14 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof APViewHolder) {
             APViewHolder apViewHolder = (APViewHolder) holder;
             WifiInfo selected = mData.get(position);
-            apViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LogUtils.d(TAG, "item click position:" + position);
-                    clearSelectedState();
-                    selected.isConnecting = true;
-                    mConnecting = selected;
-                    notifyDataSetChanged();
-                    if (mOnClickListener != null) {
-                        mOnClickListener.onItemClickListener(position, selected);
-                    }
+            apViewHolder.itemView.setOnClickListener(v -> {
+                LogUtils.d(TAG, "item click position:" + position + ", selected = " + selected);
+                clearSelectedState();
+                selected.isConnecting = true;
+                mConnecting = selected;
+//                    notifyDataSetChanged();
+                if (mOnClickListener != null) {
+                    mOnClickListener.onItemClickListener(position, selected);
                 }
             });
             apViewHolder.wifiName.setText(selected.getSsid());
@@ -184,7 +183,9 @@ public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mData.addAll(newData);
         }
         Collections.sort(mData);
-        mData.add(0,curConnected);
+        if(curConnected != null){
+            mData.add(0,curConnected);
+        }
         notifyDataSetChanged();
     }
 

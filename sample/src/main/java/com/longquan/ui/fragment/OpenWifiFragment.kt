@@ -1,14 +1,13 @@
 package com.longquan.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.Contants.OPEN_WIFI_INTENT
+import com.longquan.R
 import com.longquan.utils.WifiHelper
-import com.thanosfisherman.wifiutils.sample.R
+
 import kotlinx.android.synthetic.main.fragment_open_wifi.*
 
 /**
