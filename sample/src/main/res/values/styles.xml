@@ -41,4 +41,10 @@
         <item name="android:layout_marginRight">@dimen/item_setting_main_ps</item>
     </style>
 
+
+    <style name="passwd_check_box" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white_color</item>
+        <item name="colorControlActivated">@color/white_color</item>
+    </style>
+
 </resources>

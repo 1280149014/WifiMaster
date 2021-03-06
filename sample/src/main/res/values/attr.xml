@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EditInputView">
+        <attr name="text_cancel" format="string" />
+        <attr name="text_confirm" format="string" />
+        <attr name="inputType" format="enum">
+            <enum name="text" value="0" />
+            <enum name="textPassword" value="1" />
+        </attr>
+        <attr name="isShowCheckBox" format="boolean" />
+    </declare-styleable>
+
+
+
+
+
+</resources>

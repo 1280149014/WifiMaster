@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_edit"
+    android:layout_width="@dimen/edit_input_w_"
+    android:layout_height="@dimen/edit_input_h_"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/edit_input_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_940"
+        android:layout_height="@dimen/dp_68"
+        android:layout_marginStart="@dimen/norm_margin30"
+        android:layout_marginTop="@dimen/norm_margin30"
+        android:layout_marginEnd="@dimen/norm_margin30"
+        android:background="@drawable/input_edit_text_bg"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/edit_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/dp_24"
+            android:textColor="@color/night_color_01"
+            android:textColorHint="@color/night_color_text_tips"
+            android:textSize="@dimen/font_36"
+            android:paddingLeft="@dimen/dp_24" />
+
+        <ImageView
+            android:id="@+id/edit_clear"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_24"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_setting_icon_sclose"
+            android:layout_marginRight="@dimen/dp_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/norm_margin30"
+        android:layout_marginTop="@dimen/norm_margin30"
+        android:layout_marginEnd="@dimen/norm_margin30"
+        android:layout_marginBottom="@dimen/norm_margin30">
+
+        <CheckBox
+            android:id="@+id/cb_show_passwd"
+            style="@style/passwd_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableStart="@drawable/bg_check_box"
+            android:drawablePadding="@dimen/margin_16"
+            android:text="@string/cb_show_password"
+            android:textColor="@color/date_picker_text_dark"
+            android:textSize="@dimen/font_32"
+            android:drawableLeft="@drawable/bg_check_box" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/bt_cancel"
+                android:layout_width="@dimen/dp_258"
+                android:layout_height="@dimen/dp_62"
+                android:layout_marginEnd="@dimen/norm_margin30"
+                android:layout_toStartOf="@+id/bt_ok"
+                android:background="@drawable/bg_edit_bt_cancel"
+                android:text="@string/text_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/edit_bt_cancel_text_color"
+                android:textSize="@dimen/font_32"
+                android:layout_marginRight="@dimen/norm_margin30"
+                android:layout_toLeftOf="@+id/bt_ok" />
+
+            <Button
+                android:id="@+id/bt_ok"
+                android:layout_width="@dimen/dp_258"
+                android:layout_height="@dimen/dp_62"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_edit_bt_ok"
+                android:text="@string/text_ok"
+                android:textAllCaps="false"
+                android:textColor="@color/edit_bt_ok_text_color"
+                android:textSize="@dimen/font_32"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

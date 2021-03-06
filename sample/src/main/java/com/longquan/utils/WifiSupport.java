@@ -113,7 +113,11 @@ public class WifiSupport {
         return isEnable;
     }
 
-
+    /**
+     *  加入网络的接口
+     * @param toJoin
+     * @return
+     */
     public boolean join(WifiInfo toJoin) {
         LogUtils.d(TAG, "join:" + toJoin);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -162,8 +166,13 @@ public class WifiSupport {
      *
      * @return config
      */
-    private WifiConfiguration generateWifiConfig(String SSID, String password, String scanResultCapabilities) {
-        LogUtils.d(TAG, "generateWifiConfig -SSID" + SSID + ";password=" + password + ";capabilities=" + scanResultCapabilities);
+    private WifiConfiguration generateWifiConfig(String SSID,
+                                                 String password,
+                                                 String scanResultCapabilities) {
+        LogUtils.d(TAG,
+                "generateWifiConfig -SSID" + SSID
+                + ";password=" + password
+                + ";capabilities=" + scanResultCapabilities);
         WifiConfiguration tempConfig = isExsits(SSID);
         if (tempConfig != null) {
             mWifiManager.removeNetwork(tempConfig.networkId);
@@ -171,7 +180,7 @@ public class WifiSupport {
 
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
-        config.allowedGroupCiphers.clear();
+        config.allowedGroupCiphers.clear(); //Ciphers 密码
         config.allowedKeyManagement.clear();
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
@@ -190,7 +199,9 @@ public class WifiSupport {
         if (capabilities.length > 2) {
             pairwiseCipher = capabilities[2];
         }
-        LogUtils.d(TAG, "generateWifiConfig --> auth:" + auth + " ; keyMgmt:" + keyMgmt + " ; pairwiseCipher:" + pairwiseCipher);
+        LogUtils.d(TAG, "generateWifiConfig --> auth:" + auth +
+                " ; keyMgmt:" + keyMgmt +
+                " ; pairwiseCipher:" + pairwiseCipher);
         /**
          * Recognized IEEE 802.11 authentication algorithms.
          *

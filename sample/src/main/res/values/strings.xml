@@ -43,4 +43,17 @@
     <string name="wifi_band_24ghz" msgid="852929254171856911">"2.4 GHz"</string>
     <string name="wifi_band_5ghz" msgid="6433822023268515117">"5 GHz"</string>
 
+
+    <!-- wifi 密码输入框-->
+    <string name="cb_show_password">显示密码</string>
+    <string name="hint_password">输入密码</string>
+    <string name="hint_name">输入名称</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_confirm">确定</string>
+    <string name="text_ok">确认</string>
+    <string name="text_save">保存</string>
+
+
+    <string name="app_code">我就是老板</string>
+
 </resources>

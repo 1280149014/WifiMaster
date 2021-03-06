@@ -2,19 +2,14 @@ package com.longquan.ui
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.provider.Settings
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.longquan.adapter.BaseAdapter
-import com.longquan.bean.SsidBean
 import com.longquan.bean.WifiInfo
+import com.longquan.common.statusbar.StatusBarUtil
 import com.longquan.ui.fragment.OpenGpsFragment
 import com.longquan.ui.fragment.OpenWifiFragment
 import com.longquan.ui.fragment.WifiConnectFragment
@@ -22,9 +17,7 @@ import com.longquan.utils.GPSUtil
 import com.longquan.utils.LogUtils
 import com.longquan.utils.WifiHelper
 import com.longquan.utils.WifiTracker
-import com.thanosfisherman.wifiutils.WifiUtils
 import com.thanosfisherman.wifiutils.sample.R
-import kotlinx.android.synthetic.main.activity_home.*
 
 /**
  * author : charile yuan
@@ -45,6 +38,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StatusBarUtil.setImmersiveStatusBar(this@HomeActivity, false)
         setContentView(R.layout.activity_home)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 555)
         updateUi()

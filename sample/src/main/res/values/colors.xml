@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#3F51B5</color>
     <color name="colorAccent">#FF4081</color>
 
 
@@ -17,16 +17,6 @@
     <color name="lamp_bg_on">#2EFFFFFF</color>
     <color name="lamp_bg_on_1">#33FFFFFF</color>
     <color name="lamp_bg_off">#61000000</color>
-
-    <!--100% 白 黑-->
-<!--    <color name="night_color_01">#FFFFFFFF</color>-->
-<!--    <color name="night_color_02">#80FFFFFF</color>-->
-<!--    <color name="night_color_03">#0DDDDDDD</color>-->
-<!--    <color name="night_color_04">#FFFFFF</color>-->
-<!--    <color name="night_color_05">#88FFFFFF</color>-->
-<!--    <color name="night_color_06">#FFDDDDDD</color>-->
-<!--    <color name="night_color_08">#14FFFFFF</color>-->
-<!--    <color name="night_color_09">#CCDDDDDD</color>-->
 
     <color name="white_color">#FFFFFF</color>
 
@@ -54,6 +44,21 @@
     <color name="color_hyper">#FB0B0B</color>
     <color name="color_clear">#DADAFB</color>
 
+    <!--Settings Edit Input  -->
+    <color name="edit_input_bg">#FFEAEAEA</color>
+    <color name="edit_text_bg">#BAFFFFFF</color>
+    <color name="edit_bt_cancel_text_color">#FF000000</color>
+    <color name="edit_bt_ok_text_color">#FFFFFFFF</color>
+    <color name="edit_bt_ok_disabled_text_color">#80FFFFFF</color>
+
+    <!--所有说明性的文字颜色-->
+    <color name="night_color_text_tips">#4DFFFFFF</color>
+
+    <!--主题-->
+    <color name="theme_main_color">@android:color/holo_orange_light</color>
+    <color name="theme_main_color_pressed">@android:color/holo_orange_dark</color>
+
+    <color name="date_picker_text_dark">#89868F</color>
 
 
 </resources>

@@ -7,6 +7,6 @@ import com.thanosfisherman.wifiutils.sample.R
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_authz2)
     }
 }
