@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusBarUtil.setImmersiveStatusBar(this@HomeActivity, false)
+//        StatusBarUtil.setImmersiveStatusBar(this@HomeActivity, false)
         setContentView(R.layout.activity_home)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 555)
         updateUi()
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
         mWifiTracker = WifiTracker(this,mWifiManager)
         mWifiTracker!!.setWifiListener(this)
         registerWifiChangeReceiver()
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this)
     }
 
     private fun updateUi() {
@@ -114,7 +114,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
             unregisterReceiver(mWifiTracker!!.receiver)
             mWifiTracker!!.stopScan()
         }
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
 

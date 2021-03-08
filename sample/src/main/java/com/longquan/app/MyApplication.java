@@ -1,4 +1,4 @@
-package com.longquan;
+package com.longquan.app;
 
 import android.app.Application;
 import android.content.Context;

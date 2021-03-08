@@ -10,14 +10,14 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
 
-import com.longquan.MyApplication;
+import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.longquan.Contants.OPEN_WIFI_INTENT;
+import static com.longquan.app.Contants.OPEN_WIFI_INTENT;
 
 /**
  * author : charile yuan

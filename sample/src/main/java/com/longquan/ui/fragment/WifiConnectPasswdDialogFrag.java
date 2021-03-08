@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
@@ -20,6 +21,8 @@ import androidx.fragment.app.DialogFragment;
 import com.longquan.R;
 import com.longquan.ui.view.EditInputView;
 import com.longquan.utils.SizeUtils;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * author : charile yuan
@@ -44,12 +47,24 @@ public class WifiConnectPasswdDialogFrag extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_wifi_bt_edit_input, null);
         initPasswordInputView(view);
         Window dialogWindow = getDialog().getWindow();
-        WindowManager.LayoutParams attr = dialogWindow.getAttributes();
-        dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        attr.y = SizeUtils.dip2px(mContext, mContext.getResources().getDimension(R.dimen.dp_50));
-        dialogWindow.setAttributes(attr);
+//        WindowManager.LayoutParams attr = dialogWindow.getAttributes();
+//        dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+//        attr.y = SizeUtils.dip2px(mContext, mContext.getResources().getDimension(R.dimen.dp_50));
+//        dialogWindow.setAttributes(attr);
         getDialog().setCanceledOnTouchOutside(false);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EditText editText = mDialogView.findViewById(R.id.edit_content);
+        editText.postDelayed(() -> {
+            editText.requestFocus();
+            InputMethodManager manager =
+                    ((InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
+            if (manager != null) manager.showSoftInput(editText, 0);
+        }, 200);
     }
 
     private void initPasswordInputView(View parent) {
@@ -86,6 +101,31 @@ public class WifiConnectPasswdDialogFrag extends DialogFragment {
             }
         });
         mDialogView.setSupportChinese(false);
+
+    }
+
+
+
+    /**
+     * 显示键盘
+     *
+     * @param et 输入焦点
+     */
+    public void showInput(final EditText et) {
+//        et.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        View v = getActivity().getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
 }

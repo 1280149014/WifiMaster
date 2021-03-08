@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.longquan.R
@@ -33,6 +34,8 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     private var adapter:WifiScanAdapter? = null
     private var mWifiHelper: WifiHelper? = null
     private var mWifiSupport: WifiSupport? = null
+    private var currSelected: WifiInfo? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         wifi_recycleView.layoutManager = LinearLayoutManager(activity)
         adapter?.setOnClickListener(this)
         adapter!!.notifyDataSetChanged()
+        currSelected = WifiInfo()
     }
 
     override fun onResume() {
@@ -75,16 +79,16 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     @Subscribe
     fun onEventMainThread(event: EditPwdTextEvent) {
         LogUtils.d(TAG, "EditPwdTextEvent text:" + event.mText)
-//        if (!TextUtils.isEmpty(event.mText)) {
-//            //用户输入密码,继续尝试
-//            currSelected.isConnecting = true
-//            val pwd: String = event.mText
-//            currSelected.setPassword(pwd)
+        if (!TextUtils.isEmpty(event.mText)) {
+            //用户输入密码,继续尝试
+            currSelected?.isConnecting ?: true
+            val pwd: String = event.mText
+            currSelected?.setPassword(pwd)
 //            mWifiAPManager.connectWifi(currSelected, connectCallback)
-//        } else {
-//            //不再尝试登录
-//            currSelected.isConnecting = false
-//        }
+        } else {
+            //不再尝试登录
+            currSelected?.isConnecting ?: false
+        }
         adapter?.notifyDataSetChanged()
     }
 

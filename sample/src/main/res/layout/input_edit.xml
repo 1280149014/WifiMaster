@@ -22,8 +22,9 @@
 
         <EditText
             android:id="@+id/edit_content"
+            style="@style/item_name"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@null"
             android:clickable="true"
@@ -32,10 +33,9 @@
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:paddingStart="@dimen/dp_24"
+            android:paddingLeft="@dimen/dp_24"
             android:textColor="@color/night_color_01"
-            android:textColorHint="@color/night_color_text_tips"
-            style="@style/item_name"
-            android:paddingLeft="@dimen/dp_24" />
+            android:textColorHint="@color/night_color_text_tips" />
 
         <ImageView
             android:id="@+id/edit_clear"

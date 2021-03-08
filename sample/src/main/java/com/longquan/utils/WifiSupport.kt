@@ -8,7 +8,7 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.TextUtils
 import androidx.core.app.ActivityCompat
-import com.longquan.MyApplication
+import com.longquan.app.MyApplication
 import com.longquan.bean.WifiInfo
 import java.lang.reflect.Method
 
