@@ -21,6 +21,7 @@ import com.longquan.utils.WifiHelper
 import com.longquan.utils.WifiSupport
 import com.longquan.utils.WifiTracker
 import kotlinx.android.synthetic.main.fragment_wifi_connect.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
@@ -40,11 +41,12 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mWifiManager = activity?.application?.getSystemService(Context.WIFI_SERVICE) as WifiManager?
-        mWifiTracker = WifiTracker(activity,mWifiManager)
-        mWifiTracker!!.setWifiListener(this)
+        mWifiTracker = WifiTracker.getInstance()
+        mWifiTracker!!.addWifiListener(this)
         mWifiHelper = WifiHelper(activity,mWifiManager)
         mWifiSupport = activity?.let { mWifiManager?.let { it1 -> WifiSupport(it, it1) } }
-        activity?.registerReceiver(mWifiTracker!!.receiver, mWifiTracker!!.newIntentFilter())
+
+        EventBus.getDefault().register(this);
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +67,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     override fun onResume() {
         super.onResume()
         mWifiTracker!!.startScan()
-        mWifiManager?.wifiState?.let { onWifiStateChanged(it) }
+//        mWifiManager?.wifiState?.let { onWifiStateChanged(it) }
     }
 
     override fun onDestroy() {
@@ -74,14 +76,15 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
             activity?.unregisterReceiver(mWifiTracker!!.receiver)
             mWifiTracker!!.stopScan()
         }
+        mWifiTracker!!.removeWifiListener(this)
+        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe
     fun onEventMainThread(event: EditPwdTextEvent) {
         LogUtils.d(TAG, "EditPwdTextEvent text:" + event.mText)
         if (!TextUtils.isEmpty(event.mText)) {
-            //用户输入密码,继续尝试
-            currSelected?.isConnecting ?: true
+            currSelected?.isConnecting ?: true  //用户输入密码,继续尝试
             val pwd: String = event.mText
             currSelected?.setPassword(pwd)
 //            mWifiAPManager.connectWifi(currSelected, connectCallback)
@@ -129,23 +132,23 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         LogUtils.d(TAG, "init")
     }
 
-    override fun onWifiStateChanged(state: Int) {
-        LogUtils.d(TAG, "onWifiStateChanged state:$state")
-        when (state) {
-            WifiManager.WIFI_STATE_DISABLED->{
-
-            }
-            WifiManager.WIFI_STATE_ENABLING -> {
-
-            }
-            WifiManager.WIFI_STATE_ENABLED->{
-                mWifiTracker!!.startScan()
-            }
-            WifiManager.WIFI_STATE_DISABLING->{
-
-            }
-        }
-    }
+//    override fun onWifiStateChanged(state: Int) {
+//        LogUtils.d(TAG, "onWifiStateChanged state:$state")
+//        when (state) {
+//            WifiManager.WIFI_STATE_DISABLED->{
+//
+//            }
+//            WifiManager.WIFI_STATE_ENABLING -> {
+//
+//            }
+//            WifiManager.WIFI_STATE_ENABLED->{
+//                mWifiTracker!!.startScan()
+//            }
+//            WifiManager.WIFI_STATE_DISABLING->{
+//
+//            }
+//        }
+//    }
 
     override fun onConnectFail() {
         LogUtils.d(TAG, "onConnectFail")

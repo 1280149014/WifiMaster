@@ -11,8 +11,11 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 
+import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
+import com.thanosfisherman.wifiutils.sample.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,7 +27,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class WifiTracker {
     private final String TAG = WifiTracker.class.getSimpleName();
     private Context mContext;
-    private WifiTrackerReceiver mWifiListener;
+    private List<WifiTrackerReceiver> mWifiListeners = new ArrayList<>();
+    WiFiStateListener mWifiStateListener;
     private WifiManager mWifiManager;
     private WifiHelper mWifiHelper;
     private final AtomicBoolean mConnected = new AtomicBoolean(false);
@@ -43,7 +47,22 @@ public class WifiTracker {
      */
     private boolean HAS_FOUR_WAY_HANDSHAKE = false;
 
-    public WifiTracker(Context context, WifiManager wifiManager) {
+    private static WifiTracker mWifiTracker;
+
+
+    public static WifiTracker getInstance(){
+        if(mWifiTracker == null){
+            synchronized (WifiTracker.class){
+                if(mWifiTracker == null){
+                    mWifiTracker = new WifiTracker(MyApplication.sApp,
+                            (WifiManager) MyApplication.sApp.getSystemService(Context.WIFI_SERVICE));
+                }
+            }
+        }
+        return mWifiTracker;
+    }
+
+    private WifiTracker(Context context, WifiManager wifiManager) {
         this.mContext = context;
         this.mWifiManager = wifiManager;
         this.mWifiHelper = new WifiHelper(mContext, mWifiManager);
@@ -71,8 +90,20 @@ public class WifiTracker {
         return mReceiver;
     }
 
-    public void setWifiListener(WifiTrackerReceiver listener) {
-        this.mWifiListener = listener;
+    public void setWifiListener(List<WifiTrackerReceiver> listeners) {
+        this.mWifiListeners = listeners;
+    }
+
+    public void addWifiListener(WifiTrackerReceiver listener) {
+        this.mWifiListeners.add(listener);
+    }
+
+    public void removeWifiListener(WifiTrackerReceiver listener) {
+        this.mWifiListeners.remove(listener);
+    }
+
+    public void setWifiStateListener(WiFiStateListener listener){
+        this.mWifiStateListener = listener;
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -88,8 +119,8 @@ public class WifiTracker {
                 } else if (state == WifiManager.WIFI_STATE_DISABLED) {
                     stopScan();
                 }
-                if (mWifiListener != null) {
-                    mWifiListener.onWifiStateChanged(state);
+                if (mWifiStateListener != null) {
+                    mWifiStateListener.onWifiStateChanged(state);
                 }
             }
             else if (WifiManager.SCAN_RESULTS_AVAILABLE_ACTION.equals(action)) {
@@ -114,8 +145,8 @@ public class WifiTracker {
             }
             else if (WifiManager.RSSI_CHANGED_ACTION.equals(action)) {
                 LogUtils.d(TAG, "RSSI_CHANGED_ACTION ");
-                if (mWifiListener != null) {
-                    mWifiListener.onRssiChanged();
+                for (WifiTrackerReceiver listener : mWifiListeners) {
+                    listener.onRssiChanged();
                 }
             }
         }
@@ -165,7 +196,9 @@ public class WifiTracker {
         LogUtils.d(TAG, "SupplicantStatus-hasNewState=" + hasErrorCode);
         if (SupplicantState.SCANNING.equals(state)) {
             LogUtils.d(TAG, "recSupplicantStatus-SCANNING");
-            mWifiListener.onSupplicantScanning();
+            for(WifiTrackerReceiver listener : mWifiListeners){
+                listener.onSupplicantScanning();
+            }
             HAS_FOUR_WAY_HANDSHAKE = false;
         } else if (SupplicantState.INACTIVE.equals(state)) {
             LogUtils.d(TAG, "recSupplicantStatus-INACTIVE");
@@ -179,10 +212,14 @@ public class WifiTracker {
         } else if (SupplicantState.DISCONNECTED.equals(state)) {
             LogUtils.d(TAG, "recSupplicantStatus-DISCONNECTED --> enableWifiConnectivityManager true");
             WifiSupport.enableWifiConnectivityManager(mWifiManager, true);
-            mWifiListener.onSupplicantDisconnected();
+            for(WifiTrackerReceiver listener : mWifiListeners){
+                listener.onSupplicantDisconnected();
+            }
             if (!hasErrorCode) {
                 // 连接失败
-                mWifiListener.onConnectFail();
+                for(WifiTrackerReceiver listener : mWifiListeners) {
+                    listener.onConnectFail();
+                }
             }
 
         } else if (SupplicantState.GROUP_HANDSHAKE.equals(state)) {
@@ -190,7 +227,9 @@ public class WifiTracker {
         } else if (SupplicantState.COMPLETED.equals(state)) {
             LogUtils.d(TAG, "recSupplicantStatus-COMPLETED --> enableWifiConnectivityManager true");
             WifiSupport.enableWifiConnectivityManager(mWifiManager, true);
-            mWifiListener.onSupplicantCompleted();
+            for(WifiTrackerReceiver listener : mWifiListeners) {
+                listener.onSupplicantCompleted();
+            }
         }
 
         if (hasErrorCode) {
@@ -199,7 +238,10 @@ public class WifiTracker {
             if (errorCode == WifiManager.ERROR_AUTHENTICATING && HAS_FOUR_WAY_HANDSHAKE) {
                 // 密码错误
                 LogUtils.d(TAG,"SupplicantStatus- Show Pwd Error Dialog WirelessUtils.getCurrentJoinAP -->"+ WirelessUtils.getCurrentJoinAP());
-                mWifiListener.onWrongPassword(WirelessUtils.getCurrentJoinAP());
+                for(WifiTrackerReceiver listener : mWifiListeners) {
+                    listener.onWrongPassword(WirelessUtils.getCurrentJoinAP());
+                }
+
             }
 
         }
@@ -222,13 +264,17 @@ public class WifiTracker {
         // 网络连接成功
         if (networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
             LogUtils.d(TAG, "recNetworkState-connect" + wifiInfo);
-            if (mWifiListener != null && wifiInfo != null) {
-                mWifiListener.recWifiConnected(wifiInfo);
+            if (mWifiListeners != null && wifiInfo != null) {
+                for(WifiTrackerReceiver listener : mWifiListeners) {
+                    listener.recWifiConnected(wifiInfo);
+                }
             }
         } else if (networkInfo.getDetailedState() == NetworkInfo.DetailedState.DISCONNECTED) {
             LogUtils.d(TAG, "recNetworkState-disconnect" + wifiInfo);
-            if (mWifiListener != null) {
-                mWifiListener.recWifiDisConnected(wifiInfo);
+            if (mWifiListeners != null) {
+                for(WifiTrackerReceiver listener : mWifiListeners) {
+                    listener.recWifiDisConnected(wifiInfo);
+                }
             }
         }
     }
@@ -238,11 +284,12 @@ public class WifiTracker {
         for (ScanResult res : newScanResults) {
             LogUtils.d(TAG, "getScanResults() :" + res.toString());
         }
-        mWifiListener.onScanResultsAvailable(mWifiHelper.getAllAvailableAccessPoint(newScanResults));
+        for(WifiTrackerReceiver listener : mWifiListeners) {
+            listener.onScanResultsAvailable(mWifiHelper.getAllAvailableAccessPoint(newScanResults));
+        }
     }
 
-
-    public interface WifiTrackerReceiver {
+    public interface WiFiStateListener{
         /**
          * * Called when the state of Wifi has changed, the state will be one of
          * * the following.
@@ -257,6 +304,10 @@ public class WifiTracker {
          * * @param state The new state of wifi.
          */
         void onWifiStateChanged(int state);
+    }
+
+
+    public interface WifiTrackerReceiver {
 
         /**
          * Called when scan results is available

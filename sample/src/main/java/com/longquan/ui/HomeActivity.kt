@@ -4,14 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.longquan.R
 import com.longquan.bean.WifiInfo
-import com.longquan.common.event.EditPwdTextEvent
 import com.longquan.common.statusbar.StatusBarUtil
 import com.longquan.ui.fragment.OpenGpsFragment
 import com.longquan.ui.fragment.OpenWifiFragment
@@ -20,15 +18,13 @@ import com.longquan.utils.GPSUtil
 import com.longquan.utils.LogUtils
 import com.longquan.utils.WifiHelper
 import com.longquan.utils.WifiTracker
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 /**
  * author : charile yuan
  * date   : 21-2-18
  * desc   :
  */
-class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
+class HomeActivity : AppCompatActivity() , WifiTracker.WiFiStateListener {
 
     private var TAG = HomeActivity::class.java.simpleName ;
     private var openWifiFragment:OpenWifiFragment? = null
@@ -42,15 +38,15 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        StatusBarUtil.setImmersiveStatusBar(this@HomeActivity, false)
+        StatusBarUtil.setImmersiveStatusBar(this@HomeActivity, false)
         setContentView(R.layout.activity_home)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 555)
         updateUi()
         mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
-        mWifiTracker = WifiTracker(this,mWifiManager)
-        mWifiTracker!!.setWifiListener(this)
-        registerWifiChangeReceiver()
-//        EventBus.getDefault().register(this)
+        mWifiTracker = WifiTracker.getInstance()
+
+        mWifiTracker!!.setWifiStateListener(this)
+
     }
 
     private fun updateUi() {
@@ -110,61 +106,13 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WifiTrackerReceiver{
 
     override fun onDestroy() {
         super.onDestroy()
-        if (null != mWifiTracker!!.receiver) {
-            unregisterReceiver(mWifiTracker!!.receiver)
-            mWifiTracker!!.stopScan()
-        }
-//        EventBus.getDefault().unregister(this);
-    }
 
 
-
-
-    private fun registerWifiChangeReceiver() {
-        registerReceiver(mWifiTracker!!.receiver, mWifiTracker!!.newIntentFilter())
-    }
-
-    override fun onSupplicantScanning() {
-       LogUtils.d("","onSupplicantScanning")
-    }
-
-    override fun onWrongPassword(ssid: String?) {
-        LogUtils.d("", "onWrongPassword ssid = $ssid")
-    }
-
-    override fun recWifiDisConnected(wifiInfo: android.net.wifi.WifiInfo?) {
-        LogUtils.d("", "recWifiDisConnected wifiInfo = $wifiInfo")
-    }
-
-    override fun onRssiChanged() {
-        LogUtils.d("", "onRssiChanged")
-    }
-
-    override fun recWifiConnected(wifiInfo: android.net.wifi.WifiInfo?) {
-        LogUtils.d("", "recWifiConnected wifiInfo = $wifiInfo")
-    }
-
-    override fun onSupplicantDisconnected() {
-        LogUtils.d("", "onSupplicantDisconnected")
-    }
-
-    override fun init() {
-        LogUtils.d("", "init")
     }
 
     override fun onWifiStateChanged(state: Int) {
-        LogUtils.d("", "onWifiStateChanged state:$state")
+        updateUi()
     }
 
-    override fun onConnectFail() {
-        LogUtils.d(TAG, "onConnectFail")
-    }
 
-    override fun onScanResultsAvailable(avaiableWifiInfos: MutableList<WifiInfo>?) {
-        // Do nothing
-    }
-
-    override fun onSupplicantCompleted() {
-        // Do nothing
-    }
 }

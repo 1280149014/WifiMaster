@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
+
+import com.longquan.utils.WifiTracker;
 
 /**
  * author : charile yuan
@@ -20,12 +23,19 @@ public class MyApplication extends Application {
         return sApp;
     }
 
+    WifiTracker mWifiTracker;
+
     @Override
     public void onCreate() {
         super.onCreate();
         sApp = this;
         versionName = getVersionName(sApp);
+        mWifiTracker = WifiTracker.getInstance();
+        registerReceiver(mWifiTracker.getReceiver(),mWifiTracker.newIntentFilter());
+
     }
+
+
 
     /**
      * 获取版本号

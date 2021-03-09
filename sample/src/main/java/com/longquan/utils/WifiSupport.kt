@@ -470,6 +470,6 @@ class WifiSupport(private val context: Context, private val mWifiManager: WifiMa
     }
 
     init {
-        mWifiTracker = WifiTracker(context, mWifiManager)
+        mWifiTracker = WifiTracker.getInstance()
     }
 }

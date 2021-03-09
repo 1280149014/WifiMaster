@@ -19,8 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.longquan.R;
+import com.longquan.common.event.CancelEvent;
+import com.longquan.common.event.EditPwdTextEvent;
 import com.longquan.ui.view.EditInputView;
 import com.longquan.utils.SizeUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -60,10 +64,7 @@ public class WifiConnectPasswdDialogFrag extends DialogFragment {
         super.onResume();
         EditText editText = mDialogView.findViewById(R.id.edit_content);
         editText.postDelayed(() -> {
-            editText.requestFocus();
-            InputMethodManager manager =
-                    ((InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
-            if (manager != null) manager.showSoftInput(editText, 0);
+            showInput(editText);
         }, 200);
     }
 
@@ -89,14 +90,14 @@ public class WifiConnectPasswdDialogFrag extends DialogFragment {
         mDialogView.setOnInputClickListener(new EditInputView.OnInputClickListener() {
             @Override
             public void onCancel(EditText editText) {
-//                EBus.p(new CancelEvent(true));
+                EventBus.getDefault().post(new CancelEvent(true));
                 dismiss();
             }
 
             @Override
             public void onConfirm(EditText editText) {
                 String passWord = mDialogView.getEditText();
-//                EBus.p(new EditPwdTextEvent(passWord));
+                EventBus.getDefault().post(new EditPwdTextEvent(passWord));
                 dismiss();
             }
         });
@@ -112,7 +113,7 @@ public class WifiConnectPasswdDialogFrag extends DialogFragment {
      * @param et 输入焦点
      */
     public void showInput(final EditText et) {
-//        et.requestFocus();
+        et.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
         imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
     }
