@@ -1,4 +1,4 @@
-package com.longquan.utils;
+package com.longquan.common.wifiap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.os.Build;
 import android.provider.Settings;
 
 import androidx.annotation.RequiresApi;
+
+import com.longquan.utils.LogUtils;
+import com.longquan.utils.SPUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

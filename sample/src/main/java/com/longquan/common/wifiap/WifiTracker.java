@@ -1,4 +1,4 @@
-package com.longquan.utils;
+package com.longquan.common.wifiap;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.os.Message;
 
 import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
-import com.thanosfisherman.wifiutils.sample.MainActivity;
+import com.longquan.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

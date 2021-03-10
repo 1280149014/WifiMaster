@@ -25,7 +25,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.longquan.R;
 import com.longquan.bean.WifiInfo;
 import com.longquan.utils.LogUtils;
-import com.longquan.utils.WifiHelper;
+import com.longquan.common.wifiap.WifiHelper;
 
 
 import java.util.ArrayList;

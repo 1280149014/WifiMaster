@@ -1,4 +1,4 @@
-package com.longquan.utils;
+package com.longquan.common.wifiap;
 
 import java.util.Random;
 

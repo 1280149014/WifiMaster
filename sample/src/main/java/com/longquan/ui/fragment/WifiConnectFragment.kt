@@ -8,7 +8,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.longquan.R
@@ -17,9 +16,9 @@ import com.longquan.adapter.WifiScanAdapter.onClickListener
 import com.longquan.bean.WifiInfo
 import com.longquan.common.event.EditPwdTextEvent
 import com.longquan.utils.LogUtils
-import com.longquan.utils.WifiHelper
-import com.longquan.utils.WifiSupport
-import com.longquan.utils.WifiTracker
+import com.longquan.common.wifiap.WifiHelper
+import com.longquan.common.wifiap.WifiSupport
+import com.longquan.common.wifiap.WifiTracker
 import kotlinx.android.synthetic.main.fragment_wifi_connect.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -43,7 +42,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         mWifiManager = activity?.application?.getSystemService(Context.WIFI_SERVICE) as WifiManager?
         mWifiTracker = WifiTracker.getInstance()
         mWifiTracker!!.addWifiListener(this)
-        mWifiHelper = WifiHelper(activity,mWifiManager)
+        mWifiHelper = WifiHelper(activity, mWifiManager)
         mWifiSupport = activity?.let { mWifiManager?.let { it1 -> WifiSupport(it, it1) } }
 
         EventBus.getDefault().register(this);

@@ -1,4 +1,4 @@
-package com.longquan.utils;
+package com.longquan.common.wifiap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
+import com.longquan.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;

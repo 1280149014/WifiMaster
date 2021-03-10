@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.longquan.R
-import com.longquan.utils.WifiHelper
+import com.longquan.common.wifiap.WifiHelper
 
 import kotlinx.android.synthetic.main.fragment_open_wifi.*
 

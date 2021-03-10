@@ -9,15 +9,13 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.longquan.R
-import com.longquan.bean.WifiInfo
 import com.longquan.common.statusbar.StatusBarUtil
 import com.longquan.ui.fragment.OpenGpsFragment
 import com.longquan.ui.fragment.OpenWifiFragment
 import com.longquan.ui.fragment.WifiConnectFragment
 import com.longquan.utils.GPSUtil
-import com.longquan.utils.LogUtils
-import com.longquan.utils.WifiHelper
-import com.longquan.utils.WifiTracker
+import com.longquan.common.wifiap.WifiHelper
+import com.longquan.common.wifiap.WifiTracker
 
 /**
  * author : charile yuan
@@ -44,9 +42,7 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WiFiStateListener {
         updateUi()
         mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
         mWifiTracker = WifiTracker.getInstance()
-
         mWifiTracker!!.setWifiStateListener(this)
-
     }
 
     private fun updateUi() {
@@ -106,13 +102,10 @@ class HomeActivity : AppCompatActivity() , WifiTracker.WiFiStateListener {
 
     override fun onDestroy() {
         super.onDestroy()
-
-
     }
 
     override fun onWifiStateChanged(state: Int) {
         updateUi()
     }
-
 
 }

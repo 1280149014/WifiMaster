@@ -4,9 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiManager;
 
-import com.longquan.utils.WifiTracker;
+import com.longquan.common.wifiap.WifiTracker;
 
 /**
  * author : charile yuan
