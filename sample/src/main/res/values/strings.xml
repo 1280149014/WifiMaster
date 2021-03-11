@@ -55,5 +55,6 @@
 
 
     <string name="app_code">我就是老板</string>
+    <string name="captive_portal_text">本页内容由WiFi热点主任提供,\n Wifi大师不对其内容负责,也不承担任何法律责任</string>
 
 </resources>

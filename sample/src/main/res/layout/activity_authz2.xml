@@ -8,4 +8,26 @@
     tools:context="com.longquan.ui.AuthActivity"
     tools:ignore="MissingDefaultResource">
 
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tips"
+        android:id="@+id/webView"
+        />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_62"
+        style="@style/item_small_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_horizontal"
+        android:id="@+id/tips"
+        android:text="@string/captive_portal_text"
+
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

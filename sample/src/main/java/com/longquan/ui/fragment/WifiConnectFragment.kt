@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.longquan.R
@@ -19,6 +20,14 @@ import com.longquan.utils.LogUtils
 import com.longquan.common.wifiap.WifiHelper
 import com.longquan.common.wifiap.WifiSupport
 import com.longquan.common.wifiap.WifiTracker
+import com.thanosfisherman.wifiutils.TypeEnum
+import com.thanosfisherman.wifiutils.WifiUtils
+import com.thanosfisherman.wifiutils.wifiConnect.ConnectionErrorCode
+import com.thanosfisherman.wifiutils.wifiConnect.ConnectionSuccessListener
+import com.thanosfisherman.wifiutils.wifiDisconnect.DisconnectionErrorCode
+import com.thanosfisherman.wifiutils.wifiDisconnect.DisconnectionSuccessListener
+import com.thanosfisherman.wifiutils.wifiRemove.RemoveErrorCode
+import com.thanosfisherman.wifiutils.wifiRemove.RemoveSuccessListener
 import kotlinx.android.synthetic.main.fragment_wifi_connect.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -28,14 +37,12 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
 
     private var TAG = WifiConnectFragment::class.java.simpleName ;
     private var mWifiTracker: WifiTracker? = null
-    private val mContext: Context? = null
+    private var mContext: Context? = null
     private var mWifiManager: WifiManager? = null
 
     private var adapter:WifiScanAdapter? = null
     private var mWifiHelper: WifiHelper? = null
     private var mWifiSupport: WifiSupport? = null
-    private var currSelected: WifiInfo? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +51,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         mWifiTracker!!.addWifiListener(this)
         mWifiHelper = WifiHelper(activity, mWifiManager)
         mWifiSupport = activity?.let { mWifiManager?.let { it1 -> WifiSupport(it, it1) } }
-
+        mContext = context
         EventBus.getDefault().register(this);
     }
 
@@ -60,7 +67,7 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         wifi_recycleView.layoutManager = LinearLayoutManager(activity)
         adapter?.setOnClickListener(this)
         adapter!!.notifyDataSetChanged()
-        currSelected = WifiInfo()
+        mCurSelected = WifiInfo()
     }
 
     override fun onResume() {
@@ -83,13 +90,13 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
     fun onEventMainThread(event: EditPwdTextEvent) {
         LogUtils.d(TAG, "EditPwdTextEvent text:" + event.mText)
         if (!TextUtils.isEmpty(event.mText)) {
-            currSelected?.isConnecting ?: true  //用户输入密码,继续尝试
+            mCurSelected?.isConnecting ?: true  //用户输入密码,继续尝试
             val pwd: String = event.mText
-            currSelected?.setPassword(pwd)
-//            mWifiAPManager.connectWifi(currSelected, connectCallback)
+            mCurSelected?.setPassword(pwd)
+            mContext?.let { connectWithWpa(it, mCurSelected!!.ssid,pwd) }
         } else {
             //不再尝试登录
-            currSelected?.isConnecting ?: false
+            mCurSelected?.isConnecting ?: false
         }
         adapter?.notifyDataSetChanged()
     }
@@ -181,14 +188,14 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
         LogUtils.d(TAG, "onAddOthersNetwork")
     }
     private val isScroll = false
-    private var mCurrSelected: WifiInfo? = null
+    private var mCurSelected: WifiInfo? = null
     private var isNeedShowPasswordError = false
     override fun onItemClickListener(position: Int, selected: WifiInfo?) {
         LogUtils.d(TAG, "onAddOthersNetwork")
         if (isScroll) {
             return
         }
-        mCurrSelected = selected
+        mCurSelected = selected
         if (selected != null) {
             toConnect(selected)
         }
@@ -221,5 +228,68 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
             isNeedShowPasswordError = true
         }
     }
+
+    private fun connectWithWpa(context: Context,SSID: String,PASSWORD: String) {
+        WifiUtils.withContext(context)
+                .connectWith(SSID, PASSWORD)
+                .setTimeout(15000)
+                .onConnectionResult(object : ConnectionSuccessListener {
+                    override fun success() {
+                        Toast.makeText(context, "SUCCESS!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun failed(errorCode: ConnectionErrorCode) {
+                        Toast.makeText(context, "EPIC FAIL!$errorCode", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .start()
+    }
+
+    private fun connectHidden(context: Context,SSID: String,PASSWORD: String) {
+        WifiUtils.withContext(context)
+                .connectWith(SSID, PASSWORD, TypeEnum.EAP)
+                .onConnectionResult(object : ConnectionSuccessListener {
+                    override fun success() {
+                        Toast.makeText(context, "SUCCESS!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun failed(errorCode: ConnectionErrorCode) {
+                        Toast.makeText(context, "EPIC FAIL!$errorCode", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .start()
+    }
+
+    private fun disconnect(context: Context) {
+        WifiUtils.withContext(context)
+                .disconnect(object : DisconnectionSuccessListener {
+                    override fun success() {
+                        Toast.makeText(context, "Disconnect success!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun failed(errorCode: DisconnectionErrorCode) {
+                        Toast.makeText(context, "Failed to disconnect: $errorCode", Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun remove(context: Context,SSID: String) {
+        WifiUtils.withContext(context)
+                .remove(SSID, object : RemoveSuccessListener {
+                    override fun success() {
+                        Toast.makeText(context, "Remove success!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun failed(errorCode: RemoveErrorCode) {
+                        Toast.makeText(context, "Failed to disconnect and remove: $errorCode", Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun check(context: Context,SSID: String) {
+        val result = WifiUtils.withContext(context).isWifiConnected(SSID)
+        Toast.makeText(context, "Wifi Connect State: $result", Toast.LENGTH_SHORT).show()
+    }
+
 
 }
