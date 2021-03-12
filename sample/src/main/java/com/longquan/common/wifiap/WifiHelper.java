@@ -14,6 +14,8 @@ import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
 import com.longquan.utils.LogUtils;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +57,36 @@ public class WifiHelper {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 判断wifi是否需要Portal认证
+     *
+     * @return true  false
+     */
+    public static boolean getWifiSetPortal(String Url) {
+        int WALLED_GARDEN_SOCKET_TIMEOUT_MS = 2500;
+        HttpURLConnection urlConnection = null;
+        int code = 0;
+        try {
+            URL url = new URL(Url);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setInstanceFollowRedirects(false);
+            urlConnection.setConnectTimeout(WALLED_GARDEN_SOCKET_TIMEOUT_MS);
+            urlConnection.setReadTimeout(WALLED_GARDEN_SOCKET_TIMEOUT_MS);
+            urlConnection.setUseCaches(false);
+            urlConnection.getInputStream();
+            code = urlConnection.getResponseCode();
+            return code != 204;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
     }
 
 
