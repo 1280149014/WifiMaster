@@ -1,13 +1,13 @@
 package com.longquan.ui.fragment
 
+import android.content.Context
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.longquan.R
-import com.longquan.common.wifiap.WifiHelper
-
 import kotlinx.android.synthetic.main.fragment_open_wifi.*
 
 /**
@@ -37,7 +37,9 @@ class OpenWifiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         open_wifi_button.setOnClickListener {
-            WifiHelper.OpenWifi(activity)
+           // WifiHelper.OpenWifi(activity)
+            val wifiManager : WifiManager = (requireActivity().applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
+            wifiManager.setWifiEnabled(true)
         }
     }
 
