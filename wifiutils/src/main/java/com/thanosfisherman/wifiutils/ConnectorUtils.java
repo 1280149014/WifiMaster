@@ -240,9 +240,9 @@ public final class ConnectorUtils {
             return false;
         }
 
-        if (isAndroidQOrLater()) {
-            return connectAndroidQ(wifiManager, connectivityManager, handler, wifiConnectionCallback, scanResult, password);
-        }
+//        if (isAndroidQOrLater()) {
+//            return connectAndroidQ(wifiManager, connectivityManager, handler, wifiConnectionCallback, scanResult, password);
+//        }
 
         return connectPreAndroidQ(context, wifiManager, scanResult, password);
     }

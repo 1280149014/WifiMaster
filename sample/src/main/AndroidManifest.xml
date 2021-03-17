@@ -29,7 +29,8 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name="com.longquan.ui.HomeActivity"
-            android:configChanges="orientation|keyboardHidden|locale|screenSize|layoutDirection|uiMode"
+            android:configChanges="orientation|keyboardHidden|locale|screenSize
+                    |smallestScreenSize|screenLayout|layoutDirection|uiMode"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
