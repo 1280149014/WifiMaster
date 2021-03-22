@@ -9,6 +9,7 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.longquan.app.MyApplication;
 import com.longquan.bean.WifiInfo;
@@ -214,6 +215,124 @@ public class WifiHelper {
         return mWifiInfo.isConnected();
     }
 
+
+    /**
+     * 连接wifi
+     *
+     * @param ssid         服务标志
+     * @param password     密码
+     * @param capabilities 安全性
+     * connectWifi :  ssid : iPhone 7  Password : 19921219002 capabilities : [WPA2-PSK-CCMP][ESS]
+     * @return
+     */
+    public boolean connectWifi(String ssid, String password, String capabilities) {
+        Log.e(TAG,"connectWifi : "+" ssid : "+ssid+" Password : "+password+" capabilities : "+capabilities);
+        WifiConfiguration mWifiConfiguration;
+        //检测指定SSID的WifiConfiguration 是否存在
+        WifiConfiguration tempConfig = isExists(ssid);
+        boolean enabled;
+        if (tempConfig == null) {
+            //创建一个新的WifiConfiguration ，CreateWifiInfo()需要自己实现
+            mWifiConfiguration = createWifiInfo(ssid, password, getWifiCipherWay(capabilities));
+            int wcgID = mWifiManager.addNetwork(mWifiConfiguration);
+            enabled = mWifiManager.enableNetwork(wcgID, true);
+        } else {
+            //发现指定WiFi，并且这个WiFi以前连接成功过
+            mWifiConfiguration = tempConfig;
+            enabled = mWifiManager.enableNetwork(mWifiConfiguration.networkId, true);
+
+        }
+        Log.i(TAG, "enableNetwork:" + enabled);
+        if (enabled) { //若失败，则连接之前成功过的网络
+            boolean reconnect = mWifiManager.reconnect();
+            Log.i(TAG, "reconnect:" + reconnect);
+        }
+        return enabled;
+    }
+
+
+    /**
+     * 创建一个wifi连接配置
+     *
+     * @param SSID
+     * @param Password
+     * @param Type
+     * @return
+     */
+    public WifiConfiguration createWifiInfo(String SSID, String Password,
+                                            WifiCipherType Type) {
+        WifiConfiguration config = new WifiConfiguration();
+        config.allowedAuthAlgorithms.clear();
+        config.allowedGroupCiphers.clear();
+        config.allowedKeyManagement.clear();
+        config.allowedPairwiseCiphers.clear();
+        config.allowedProtocols.clear();
+        config.SSID = "\"" + SSID + "\"";
+        WifiConfiguration tempConfig = this.isExists(SSID);
+        if (tempConfig != null) {
+            mWifiManager.removeNetwork(tempConfig.networkId);
+        }
+
+        if (Type == WifiCipherType.WIFICIPHER_NOPASS) // WIFICIPHER_NOPASS
+        {
+            config.wepKeys[0] = "";
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.wepTxKeyIndex = 0;
+        }
+        if (Type == WifiCipherType.WIFICIPHER_WEP) // WIFICIPHER_WEP
+        {
+            config.hiddenSSID = true;
+            config.wepKeys[0] = "\"" + Password + "\"";
+            config.allowedAuthAlgorithms
+                    .set(WifiConfiguration.AuthAlgorithm.SHARED);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            config.allowedGroupCiphers
+                    .set(WifiConfiguration.GroupCipher.WEP104);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.wepTxKeyIndex = 0;
+        }
+        if (Type == WifiCipherType.WIFICIPHER_WPA) // WIFICIPHER_WPA
+        {
+            config.preSharedKey = "\"" + Password + "\"";
+            config.hiddenSSID = true;
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            // config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.status = WifiConfiguration.Status.ENABLED;
+        }
+        return config;
+    }
+
+
+    /**
+     * 加密方式枚举
+     */
+    public enum WifiCipherType {
+        WIFICIPHER_WEP, WIFICIPHER_WPA, WIFICIPHER_NOPASS, WIFICIPHER_INVALID
+    }
+
+    /**
+     * 判断wifi支持的加密方式
+     *
+     * @param capabilities
+     */
+    public WifiCipherType getWifiCipherWay(String capabilities) {
+        if (TextUtils.isEmpty(capabilities)) {
+            return WifiCipherType.WIFICIPHER_INVALID;//无效
+        } else if (capabilities.contains("WEP")) {
+            return WifiCipherType.WIFICIPHER_WEP;
+        } else if (capabilities.contains("WPA") || capabilities.contains("WPA2") || capabilities.contains("WPS")) {
+            return WifiCipherType.WIFICIPHER_WPA;
+        } else {
+            return WifiCipherType.WIFICIPHER_NOPASS;
+        }
+    }
 
     /**
      * 通过ssid 从config中获取加密方式

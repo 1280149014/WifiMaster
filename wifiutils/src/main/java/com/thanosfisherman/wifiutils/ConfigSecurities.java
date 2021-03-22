@@ -192,6 +192,7 @@ final class ConfigSecurities {
         }
         final String ssid = convertToQuotedString(scanResult.SSID);
         final String bssid = scanResult.BSSID;
+
         final String security = getSecurity(scanResult);
 
         final List<WifiConfiguration> configurations = wifiManager.getConfiguredNetworks();

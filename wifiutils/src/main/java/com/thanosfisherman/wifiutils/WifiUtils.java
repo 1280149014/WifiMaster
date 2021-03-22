@@ -154,8 +154,10 @@ public final class WifiUtils implements WifiConnectorBuilder,
                 }
             }
             if (mSingleScanResult != null && mPassword != null) {
-                if (connectToWifi(mContext, mWifiManager, mConnectivityManager, mHandler, mSingleScanResult, mPassword, mWifiConnectionCallback)) {
-                    registerReceiver(mContext, (mWifiConnectionReceiver).connectWith(mSingleScanResult, mPassword, mConnectivityManager),
+                if (connectToWifi(mContext, mWifiManager, mConnectivityManager, mHandler,
+                        mSingleScanResult, mPassword, mWifiConnectionCallback)) {
+                    registerReceiver(mContext, (mWifiConnectionReceiver)
+                                    .connectWith(mSingleScanResult, mPassword, mConnectivityManager),
                             new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION));
                     registerReceiver(mContext, mWifiConnectionReceiver,
                             new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
@@ -164,7 +166,8 @@ public final class WifiUtils implements WifiConnectorBuilder,
                     mWifiConnectionCallback.errorConnect(ConnectionErrorCode.COULD_NOT_CONNECT);
                 }
             } else {
-                if (connectToWifiHidden(mContext, mWifiManager, mConnectivityManager, mHandler, mSsid, type, mPassword, mWifiConnectionCallback)) {
+                if (connectToWifiHidden(mContext, mWifiManager, mConnectivityManager, mHandler,
+                        mSsid, type, mPassword, mWifiConnectionCallback)) {
                     registerReceiver(mContext, (mWifiConnectionReceiver).connectWith(mSsid, mPassword, mConnectivityManager),
                             new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION));
                     registerReceiver(mContext, mWifiConnectionReceiver,

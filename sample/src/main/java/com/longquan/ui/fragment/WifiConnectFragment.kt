@@ -93,7 +93,8 @@ class WifiConnectFragment : Fragment() , WifiTracker.WifiTrackerReceiver, onClic
             mCurSelected?.isConnecting ?: true  //用户输入密码,继续尝试
             val pwd: String = event.mText
             mCurSelected?.setPassword(pwd)
-            mContext?.let { connectWithWpa(it, mCurSelected!!.ssid,pwd) }
+//            mContext?.let { connectWithWpa(it, mCurSelected!!.ssid,pwd) }
+            mWifiHelper!!.connectWifi(mCurSelected!!.ssid,mCurSelected!!.password,mCurSelected!!.capabilities)
         } else {
             //不再尝试登录
             mCurSelected?.isConnecting ?: false

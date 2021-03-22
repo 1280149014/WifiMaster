@@ -22,7 +22,6 @@ public class GPSUtil {
         if (gps || network) {
             return true;
         }
-
         return false;
     }
 
